@@ -1,6 +1,5 @@
 // Usage: ./TWO-NN.x -input <filename> {-coord|-dist} [-discard <fraction>]
 
-// >> dd o >> xx >> yy >> dd? //dddd
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -36,6 +35,7 @@ double DistValue(int i, int j, int N, const vector<double>& Dist, bool TriangSup
 	return Dist[kk-1];
 }
 
+//Find the two nearest neighbors in the case of a file of coordinates
 
 void find_nearest_coo(vector<double>& D1,vector<double>& D2, vector<double>& X, int N, int ncoords, bool periodicB){
 
@@ -80,6 +80,7 @@ void find_nearest_coo(vector<double>& D1,vector<double>& D2, vector<double>& X, 
 	return;
 }
 
+//Find the two nearest neighbors in the case of a file of distances
 
 void find_nearest_dist(vector<double>& D1, vector<double>& D2, const vector<double>& Dist, const int N, const bool TriangSup)
 {
@@ -492,18 +493,8 @@ int main(int argc, char* argv[])
 	file_ba.close();
 
 
+
 	// block analysis plot
-
-	ofstream file_gpl_fun("S_set.gpl");
-    file_gpl_fun<<fixed;
-	file_gpl_fun.precision(2);
-	file_gpl_fun<< "set key top left box lw 1  lc rgb \"#7F7F7F\" font \",10\" spacing 5" <<endl;
-	file_gpl_fun<< "set border 4095 lw 1 lc rgb \"#7F7F7F\" " <<endl; 
-	file_gpl_fun<< "set title \"S set "<<file_in<<"\" font \",20\"" <<endl;
-	file_gpl_fun<< "p \'fun.dat\' lc rgb \"#7F7F7F\" pt 7 not, "<<"\"<head -"<<N_retained<<" 'fun.dat'\" lc rgb \"#DC143C\" pt 7 t \"S set\", "<<dim_tot<<"*x"<<" lw 2 lc rgb \"#00BFFF\" t \" "<<dim_tot<<"*x\"" <<endl;
-	system("gnuplot -persist S_set.gpl");
-
-	file_gpl_fun.close();
 
 
 	ofstream file_gpl_ba("block_analysis.gpl");
@@ -519,7 +510,19 @@ int main(int argc, char* argv[])
 	system("gnuplot -persist block_analysis.gpl");
 
 	file_gpl_ba.close();
+	
+	// S-set plot
+	
+	ofstream file_gpl_fun("S_set.gpl");
+    	file_gpl_fun<<fixed;
+	file_gpl_fun.precision(2);
+	file_gpl_fun<< "set key top left box lw 1  lc rgb \"#7F7F7F\" font \",10\" spacing 5" <<endl;
+	file_gpl_fun<< "set border 4095 lw 1 lc rgb \"#7F7F7F\" " <<endl; 
+	file_gpl_fun<< "set title \"S set "<<file_in<<"\" font \",20\"" <<endl;
+	file_gpl_fun<< "p \'fun.dat\' lc rgb \"#7F7F7F\" pt 7 not, "<<"\"<head -"<<N_retained<<" 'fun.dat'\" lc rgb \"#DC143C\" pt 7 t \"S set\", "<<dim_tot<<"*x"<<" lw 2 lc rgb \"#00BFFF\" t \" "<<dim_tot<<"*x\"" <<endl;
+	system("gnuplot -persist S_set.gpl");
 
+	file_gpl_fun.close();
 		
 	return 0;
 
