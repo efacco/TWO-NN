@@ -13,4 +13,9 @@ In the case of distances, an upper diagonal matrix has to be passed to the progr
 
 Outputs:
 
+r_list.dat file containing the list of distances between the point and its first and second neighbor
+nu_list.dat file containing the list of nu values   
+fun.dat file containing the coordinates to plot the S-set
+
+The program produces also two plot, the block analysis plot and the S-set plot
 
